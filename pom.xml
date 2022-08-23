@@ -17,7 +17,7 @@
         <java.version>11</java.version>
         <version.temporal>1.16.0-SNAPSHOT</version.temporal>
         <spring-cloud.version>2021.0.3</spring-cloud.version>
-        <spring-cloud-sleuth-otel.version>1.0.0-M2</spring-cloud-sleuth-otel.version>
+        <spring-cloud-sleuth-otel.version>1.1.0-M7</spring-cloud-sleuth-otel.version>
     </properties>
     <dependencies>
         <dependency>
@@ -65,13 +65,7 @@
         </dependency>
         <dependency>
             <groupId>io.opentelemetry</groupId>
-            <artifactId>opentelemetry-exporter-otlp-trace</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.google.protobuf</groupId>
-                    <artifactId>protobuf-java</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>opentelemetry-exporter-otlp</artifactId>
         </dependency>
 
         <dependency>
@@ -100,8 +94,8 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-sleuth-otel-dependencies</artifactId>
                 <version>${spring-cloud-sleuth-otel.version}</version>
-                <scope>import</scope>
                 <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
