@@ -1,0 +1,150 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------< com.temporal.demos:temporal-springboot-demo >-------------
+[INFO] Building temporal-springboot-demo 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-dependency-plugin:3.3.0:tree (default-cli) @ temporal-springboot-demo ---
+[INFO] com.temporal.demos:temporal-springboot-demo:jar:0.0.1-SNAPSHOT
+[INFO] +- org.springframework.boot:spring-boot-starter-web:jar:2.7.3:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter:jar:2.7.3:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot:jar:2.7.3:compile
+[INFO] |  |  +- org.springframework.boot:spring-boot-starter-logging:jar:2.7.3:compile
+[INFO] |  |  |  +- ch.qos.logback:logback-classic:jar:1.2.11:compile
+[INFO] |  |  |  |  \- ch.qos.logback:logback-core:jar:1.2.11:compile
+[INFO] |  |  |  +- org.apache.logging.log4j:log4j-to-slf4j:jar:2.17.2:compile
+[INFO] |  |  |  |  \- org.apache.logging.log4j:log4j-api:jar:2.17.2:compile
+[INFO] |  |  |  \- org.slf4j:jul-to-slf4j:jar:1.7.36:compile
+[INFO] |  |  +- jakarta.annotation:jakarta.annotation-api:jar:1.3.5:compile
+[INFO] |  |  \- org.yaml:snakeyaml:jar:1.30:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-json:jar:2.7.3:compile
+[INFO] |  |  \- com.fasterxml.jackson.module:jackson-module-parameter-names:jar:2.13.3:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-tomcat:jar:2.7.3:compile
+[INFO] |  |  +- org.apache.tomcat.embed:tomcat-embed-core:jar:9.0.65:compile
+[INFO] |  |  +- org.apache.tomcat.embed:tomcat-embed-el:jar:9.0.65:compile
+[INFO] |  |  \- org.apache.tomcat.embed:tomcat-embed-websocket:jar:9.0.65:compile
+[INFO] |  +- org.springframework:spring-web:jar:5.3.22:compile
+[INFO] |  |  \- org.springframework:spring-beans:jar:5.3.22:compile
+[INFO] |  \- org.springframework:spring-webmvc:jar:5.3.22:compile
+[INFO] |     +- org.springframework:spring-aop:jar:5.3.22:compile
+[INFO] |     +- org.springframework:spring-context:jar:5.3.22:compile
+[INFO] |     \- org.springframework:spring-expression:jar:5.3.22:compile
+[INFO] +- io.temporal:temporal-spring-boot-autoconfigure-alpha:jar:1.16.0-SNAPSHOT:compile
+[INFO] |  +- org.springframework.boot:spring-boot-autoconfigure:jar:2.7.3:compile
+[INFO] |  +- io.temporal:temporal-opentracing:jar:1.16.0-SNAPSHOT:compile
+[INFO] |  |  +- io.opentracing:opentracing-api:jar:0.33.0:compile
+[INFO] |  |  \- io.opentracing:opentracing-util:jar:0.33.0:runtime
+[INFO] |  |     \- io.opentracing:opentracing-noop:jar:0.33.0:runtime
+[INFO] |  \- javax.annotation:javax.annotation-api:jar:1.3.2:runtime
+[INFO] +- io.temporal:temporal-sdk:jar:1.16.0-SNAPSHOT:compile
+[INFO] |  +- io.temporal:temporal-serviceclient:jar:1.16.0-SNAPSHOT:compile
+[INFO] |  |  +- io.grpc:grpc-api:jar:1.48.1:compile
+[INFO] |  |  |  \- io.grpc:grpc-context:jar:1.48.1:compile
+[INFO] |  |  +- io.grpc:grpc-netty-shaded:jar:1.48.1:compile
+[INFO] |  |  |  \- io.perfmark:perfmark-api:jar:0.25.0:runtime
+[INFO] |  |  +- io.grpc:grpc-services:jar:1.48.1:compile
+[INFO] |  |  +- com.google.protobuf:protobuf-java-util:jar:3.21.5:compile
+[INFO] |  |  |  \- com.google.protobuf:protobuf-java:jar:3.21.5:compile
+[INFO] |  |  +- com.uber.m3:tally-core:jar:0.11.1:compile
+[INFO] |  |  +- org.slf4j:slf4j-api:jar:1.7.36:compile
+[INFO] |  |  \- io.grpc:grpc-core:jar:1.48.1:compile
+[INFO] |  |     \- com.google.android:annotations:jar:4.1.1.4:runtime
+[INFO] |  +- com.google.code.gson:gson:jar:2.9.1:compile
+[INFO] |  +- io.micrometer:micrometer-core:jar:1.9.3:compile
+[INFO] |  |  +- org.hdrhistogram:HdrHistogram:jar:2.1.12:compile
+[INFO] |  |  \- org.latencyutils:LatencyUtils:jar:2.0.3:runtime
+[INFO] |  +- com.fasterxml.jackson.core:jackson-databind:jar:2.13.3:compile
+[INFO] |  |  +- com.fasterxml.jackson.core:jackson-annotations:jar:2.13.3:compile
+[INFO] |  |  \- com.fasterxml.jackson.core:jackson-core:jar:2.13.3:compile
+[INFO] |  +- com.google.guava:guava:jar:31.1-jre:compile
+[INFO] |  |  +- com.google.guava:failureaccess:jar:1.0.1:compile
+[INFO] |  |  \- com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava:compile
+[INFO] |  +- com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.13.3:compile
+[INFO] |  \- com.fasterxml.jackson.datatype:jackson-datatype-jdk8:jar:2.13.3:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-actuator:jar:2.7.3:compile
+[INFO] |  \- org.springframework.boot:spring-boot-actuator-autoconfigure:jar:2.7.3:compile
+[INFO] |     \- org.springframework.boot:spring-boot-actuator:jar:2.7.3:compile
+[INFO] +- io.micrometer:micrometer-registry-prometheus:jar:1.9.3:runtime
+[INFO] |  \- io.prometheus:simpleclient_common:jar:0.15.0:runtime
+[INFO] |     \- io.prometheus:simpleclient:jar:0.15.0:runtime
+[INFO] |        +- io.prometheus:simpleclient_tracer_otel:jar:0.15.0:runtime
+[INFO] |        |  \- io.prometheus:simpleclient_tracer_common:jar:0.15.0:runtime
+[INFO] |        \- io.prometheus:simpleclient_tracer_otel_agent:jar:0.15.0:runtime
+[INFO] +- org.springframework.cloud:spring-cloud-starter-sleuth:jar:3.1.3:compile
+[INFO] |  +- org.springframework.cloud:spring-cloud-starter:jar:3.1.3:compile
+[INFO] |  |  +- org.springframework.cloud:spring-cloud-context:jar:3.1.3:compile
+[INFO] |  |  |  \- org.springframework.security:spring-security-crypto:jar:5.7.3:compile
+[INFO] |  |  +- org.springframework.cloud:spring-cloud-commons:jar:3.1.3:compile
+[INFO] |  |  \- org.springframework.security:spring-security-rsa:jar:1.0.10.RELEASE:compile
+[INFO] |  |     \- org.bouncycastle:bcpkix-jdk15on:jar:1.68:compile
+[INFO] |  |        \- org.bouncycastle:bcprov-jdk15on:jar:1.68:compile
+[INFO] |  +- org.springframework.boot:spring-boot-starter-aop:jar:2.7.3:compile
+[INFO] |  |  \- org.aspectj:aspectjweaver:jar:1.9.7:compile
+[INFO] |  \- org.springframework.cloud:spring-cloud-sleuth-autoconfigure:jar:3.1.3:compile
+[INFO] |     \- org.aspectj:aspectjrt:jar:1.9.7:compile
+[INFO] +- org.springframework.cloud:spring-cloud-sleuth-otel-autoconfigure:jar:1.0.0-M2:compile
+[INFO] |  +- org.springframework.cloud:spring-cloud-sleuth-instrumentation:jar:3.1.3:compile
+[INFO] |  |  \- org.springframework.cloud:spring-cloud-sleuth-api:jar:3.1.3:compile
+[INFO] |  +- org.springframework.cloud:spring-cloud-sleuth-otel:jar:1.0.0-M2:compile
+[INFO] |  |  \- org.springframework:spring-jcl:jar:5.3.22:compile
+[INFO] |  +- io.opentelemetry:opentelemetry-api:jar:0.13.1:compile
+[INFO] |  |  +- io.opentelemetry:opentelemetry-context:jar:0.13.1:compile
+[INFO] |  |  +- io.opentelemetry:opentelemetry-api-baggage:jar:0.13.1:compile
+[INFO] |  |  +- io.opentelemetry:opentelemetry-api-common:jar:0.13.1:compile
+[INFO] |  |  +- io.opentelemetry:opentelemetry-api-metrics:jar:0.13.0-alpha:compile
+[INFO] |  |  \- io.opentelemetry:opentelemetry-api-trace:jar:0.13.1:compile
+[INFO] |  +- io.opentelemetry:opentelemetry-sdk-common:jar:0.13.1:compile
+[INFO] |  +- io.opentelemetry:opentelemetry-sdk-trace:jar:0.13.1:compile
+[INFO] |  +- io.opentelemetry.instrumentation:opentelemetry-instrumentation-api:jar:0.13.0:compile
+[INFO] |  \- io.opentelemetry:opentelemetry-extension-trace-propagators:jar:0.13.1:compile
+[INFO] +- io.opentelemetry:opentelemetry-exporter-otlp-trace:jar:0.13.1:compile
+[INFO] |  +- io.opentelemetry:opentelemetry-sdk:jar:0.13.1:compile
+[INFO] |  |  \- io.opentelemetry:opentelemetry-sdk-metrics:jar:0.13.0-alpha:compile
+[INFO] |  +- io.opentelemetry:opentelemetry-sdk-extension-otproto:jar:0.13.1:runtime
+[INFO] |  |  \- io.opentelemetry:opentelemetry-proto:jar:0.13.1:runtime
+[INFO] |  +- io.grpc:grpc-protobuf:jar:1.33.1:compile
+[INFO] |  |  +- com.google.code.findbugs:jsr305:jar:3.0.2:compile
+[INFO] |  |  +- com.google.api.grpc:proto-google-common-protos:jar:1.17.0:compile
+[INFO] |  |  +- io.grpc:grpc-protobuf-lite:jar:1.33.1:compile
+[INFO] |  |  +- com.google.errorprone:error_prone_annotations:jar:2.3.4:compile
+[INFO] |  |  \- org.codehaus.mojo:animal-sniffer-annotations:jar:1.18:runtime
+[INFO] |  \- io.grpc:grpc-stub:jar:1.33.1:compile
+[INFO] +- org.springframework.boot:spring-boot-starter-test:jar:2.7.3:test
+[INFO] |  +- org.springframework.boot:spring-boot-test:jar:2.7.3:test
+[INFO] |  +- org.springframework.boot:spring-boot-test-autoconfigure:jar:2.7.3:test
+[INFO] |  +- com.jayway.jsonpath:json-path:jar:2.7.0:test
+[INFO] |  |  \- net.minidev:json-smart:jar:2.4.8:test
+[INFO] |  |     \- net.minidev:accessors-smart:jar:2.4.8:test
+[INFO] |  |        \- org.ow2.asm:asm:jar:9.1:test
+[INFO] |  +- jakarta.xml.bind:jakarta.xml.bind-api:jar:2.3.3:test
+[INFO] |  |  \- jakarta.activation:jakarta.activation-api:jar:1.2.2:test
+[INFO] |  +- org.assertj:assertj-core:jar:3.22.0:test
+[INFO] |  +- org.hamcrest:hamcrest:jar:2.2:test
+[INFO] |  +- org.junit.jupiter:junit-jupiter:jar:5.8.2:test
+[INFO] |  |  +- org.junit.jupiter:junit-jupiter-api:jar:5.8.2:test
+[INFO] |  |  |  +- org.opentest4j:opentest4j:jar:1.2.0:test
+[INFO] |  |  |  +- org.junit.platform:junit-platform-commons:jar:1.8.2:test
+[INFO] |  |  |  \- org.apiguardian:apiguardian-api:jar:1.1.2:test
+[INFO] |  |  +- org.junit.jupiter:junit-jupiter-params:jar:5.8.2:test
+[INFO] |  |  \- org.junit.jupiter:junit-jupiter-engine:jar:5.8.2:test
+[INFO] |  |     \- org.junit.platform:junit-platform-engine:jar:1.8.2:test
+[INFO] |  +- org.mockito:mockito-core:jar:4.5.1:test
+[INFO] |  |  +- net.bytebuddy:byte-buddy:jar:1.12.13:test
+[INFO] |  |  +- net.bytebuddy:byte-buddy-agent:jar:1.12.13:test
+[INFO] |  |  \- org.objenesis:objenesis:jar:3.2:test
+[INFO] |  +- org.mockito:mockito-junit-jupiter:jar:4.5.1:test
+[INFO] |  +- org.skyscreamer:jsonassert:jar:1.5.1:test
+[INFO] |  |  \- com.vaadin.external.google:android-json:jar:0.0.20131108.vaadin1:test
+[INFO] |  +- org.springframework:spring-core:jar:5.3.22:compile
+[INFO] |  +- org.springframework:spring-test:jar:5.3.22:test
+[INFO] |  \- org.xmlunit:xmlunit-core:jar:2.9.0:test
+[INFO] \- io.temporal:temporal-testing:jar:1.16.0-SNAPSHOT:test
+[INFO]    \- io.temporal:temporal-test-server:jar:1.16.0-SNAPSHOT:test
+[INFO]       \- com.cronutils:cron-utils:jar:9.2.0:test
+[INFO]          \- org.glassfish:jakarta.el:jar:3.0.4:test
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.475 s
+[INFO] Finished at: 2022-08-23T01:46:11-04:00
+[INFO] ------------------------------------------------------------------------
