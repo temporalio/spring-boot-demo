@@ -8,31 +8,20 @@ import org.springframework.stereotype.Component;
 @ActivityImpl(taskQueues = "CustomerOnboarding")
 public class CustomerActivitiesImpl implements CustomerActivities {
     @Override
-    public Customer mileStoneOne(Customer customer) {
-        customer.setMilestone("Adding customer to system...completed");
-        sleep(1);
+    public Customer onboardToCloud(Customer customer) {
+        customer.getMilestones().add("Cloud");
         return customer;
     }
 
     @Override
-    public Customer mileStoneTwo(Customer customer) {
-        customer.setMilestone("Creating customer cloud access...");
-        sleep(1);
+    public Customer onboardToZendesk(Customer customer) {
+        customer.getMilestones().add("Zendesk");
         return customer;
     }
 
     @Override
-    public Customer mileStoneThree(Customer customer) {
-        customer.setMilestone("Manager approval needed...");
-        sleep(2);
+    public Customer onboardToSlack(Customer customer) {
+        customer.getMilestones().add("Slack");
         return customer;
-    }
-
-    private void sleep(int sec) {
-        try {
-            Thread.sleep(sec * 1000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

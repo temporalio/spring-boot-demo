@@ -5,7 +5,7 @@ import io.temporal.activity.ActivityInterface;
 
 @ActivityInterface
 public interface CustomerActivities {
-    Customer mileStoneOne(Customer customer);
-    Customer mileStoneTwo(Customer customer);
-    Customer mileStoneThree(Customer customer);
+    Customer onboardToCloud(Customer customer);
+    Customer onboardToZendesk(Customer customer);
+    Customer onboardToSlack(Customer customer);
 }

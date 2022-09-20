@@ -4,13 +4,9 @@ import com.temporal.demos.temporalspringbootdemo.activities.CustomerActivities;
 import com.temporal.demos.temporalspringbootdemo.model.Customer;
 import io.temporal.activity.ActivityOptions;
 import io.temporal.spring.boot.WorkflowImpl;
-import io.temporal.workflow.Async;
-import io.temporal.workflow.Promise;
 import io.temporal.workflow.Workflow;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
 
 @WorkflowImpl(taskQueues = "CustomerOnboarding")
 public class CustomerWorkflowImpl implements CustomerWorkflow {
@@ -25,26 +21,34 @@ public class CustomerWorkflowImpl implements CustomerWorkflow {
 
 
     @Override
-    public String onboard(Customer customer) {
+    public Customer onboard(Customer customer) {
         this.customer = customer;
 
-        List<Promise<Customer>> promiseList = new ArrayList<>();
-        promiseList.add(Async.function(activities::mileStoneOne, customer)
-            .thenApply(c -> { this.customer = c; return c; }));
-        promiseList.add(Async.function(activities::mileStoneTwo, customer)
-                .thenApply(c -> { this.customer = c; return c; }));
-        promiseList.add(Async.function(activities::mileStoneThree, customer)
-                .thenApply(c -> { this.customer = c; return c; }));
-        Promise.allOf(promiseList).get();
+//        List<Promise<Customer>> promiseList = new ArrayList<>();
+//        promiseList.add(Async.function(activities::mileStoneOne, customer)
+//            .thenApply(c -> { this.customer = c; return c; }));
+//        promiseList.add(Async.function(activities::mileStoneTwo, customer)
+//                .thenApply(c -> { this.customer = c; return c; }));
+//        promiseList.add(Async.function(activities::mileStoneThree, customer)
+//                .thenApply(c -> { this.customer = c; return c; }));
+//        Promise.allOf(promiseList).get();
+//
+//        Workflow.await(() -> managerApproval);
 
-        Workflow.await(() -> managerApproval);
+        // simple impl just run through onboarding steps
+        if(customer.getRole().equals("CLOUD")) {
+            customer = activities.onboardToCloud(customer);
+            customer = activities.onboardToZendesk(customer);
+            customer = activities.onboardToSlack(customer);
+        } else if(customer.getRole().equals("ZENDESK")) {
+            customer = activities.onboardToZendesk(customer);
+        } else {
+            customer = activities.onboardToSlack(customer);
+        }
 
-        return "Customer onboarded...";
-    }
+        customer.setOnboarded("yes");
 
-    @Override
-    public String getMilestone() {
-        return customer.getMilestone();
+        return customer;
     }
 
     @Override

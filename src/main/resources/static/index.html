@@ -1,0 +1,174 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8"/>
+    <title>Temporal - Customer Onboarding Demo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/wingcss/0.1.8/wing.min.css"/>
+    <!-- Load AngularJS -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style>
+        .float-container {
+            padding: 10px;
+        }
+        .float-child {
+            width: 50%;
+            float: left;
+            padding: 10px;
+        }
+    </style>
+    <script type="text/javascript">
+
+        var app = angular.module("NewCustomerOnboarding", []);
+
+        app.controller("NewCustomerOnboardingController", function ($scope, $http) {
+
+            $scope.onboardedcustomers = [];
+            $scope.currentid = "";
+            $scope.lastmessage = "";
+
+            $scope.interval;
+
+            $scope.form = {
+                name: "",
+                role: ""
+            };
+
+            // Invoke workflow execution
+            $scope.add = function () {
+                $scope.currentid = getUniqueId();
+                let newcustomerdata = {
+                    "id":  $scope.currentid,
+                    "name": $scope.form.name,
+                    "role": $scope.form.role
+                };
+
+                // $scope.interval = setInterval(updateMessage, 1000);
+
+                $http({
+                    method: "POST",
+                    url: '/onboard',
+                    data: newcustomerdata,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                }).then(_success, _error);
+            };
+
+            function _success(response) {
+                clearInterval($scope.interval);
+                if(response.data.onboarded == "no") {
+                    swal({
+                        title: "Unable to onboard customer",
+                        text: "",
+                        icon: "error",
+                        timer: 3000
+                    });
+                }
+                $scope.onboardedcustomers.push(response.data);
+                _clearForm();
+            }
+
+            function _error(response) {
+                clearInterval($scope.interval);
+                alert(response.statusText);
+            }
+
+            function _clearForm() {
+                $scope.form.name = "";
+                $scope.form.role = "";
+            }
+
+            function getUniqueId() {
+                return Math.random().toString(36).substr(2, 6);
+            };
+
+            // function updateMessage() {
+            //     fetch('http://localhost:8080/onboard?' + new URLSearchParams({
+            //         id: $scope.currentid
+            //     })).then(response => response.text()).then(message => {
+            //             if(message == $scope.lastmessage || message.trim() === "" || message.startsWith("Unable")) {
+            //                 // nothing....
+            //             } else {
+            //                 sicon = "success";
+            //                 if(message.startsWith("Compensating")) {
+            //                     sicon = "info";
+            //                 }
+            //                 $scope.lastmessage = message;
+            //                 toShowMessage = message.replace(/message=/g,'');
+            //                 toShowMessage = decodeURIComponent((toShowMessage + '').replace(/\+/g, '%20'));
+            //                 swal({
+            //                     title: toShowMessage,
+            //                     text: "",
+            //                     icon: sicon,
+            //                     timer: 5000,
+            //                     button: ""
+            //                 });
+            //             }
+            //         }
+            //     );
+            // };
+        });
+    </script>
+</head>
+<body ng-app="NewCustomerOnboarding" ng-controller="NewCustomerOnboardingController">
+
+<div class="container">
+    <h1>Temporal - Spring Boot Demo</h1>
+    <br/>
+    <div class="float-container">
+        <div class="float-child">
+            <h3>Onboard new Customer:</h3>
+            <form ng-submit="add()">
+                <div class="row">
+                    <div class="col-6"><input type="text" placeholder="Company Name" ng-model="form.name" size="30"/></div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <select ng-model="form.role">
+                            <option value="" [selected]="isSelected">Onboard onto:</option>
+                            <option value="CLOUD">Cloud</option>
+                            <option value="ZENDESK">Zendesk Only</option>
+                            <option value="SLACK">Slack Only</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <input type="submit" value="Onboard!"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="float-child">
+            <h3>Onboarding Info</h3>
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Onboarding To</th>
+                    <th scope="col">Onboarded To</th>
+                    <th scope="col">Onboarding Completed</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="op in onboardedcustomers">
+                    <td>{{$index + 1}}</td>
+                    <td>{{ op.id }}</td>
+                    <td>{{ op.name }}</td>
+                    <td>{{ op.role }}</td>
+                    <td>{{ op.milestones }}</td>
+                    <td>{{ op.onboarded }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

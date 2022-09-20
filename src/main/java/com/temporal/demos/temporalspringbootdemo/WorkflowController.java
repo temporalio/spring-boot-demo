@@ -5,6 +5,7 @@ import com.temporal.demos.temporalspringbootdemo.workflows.CustomerWorkflow;
 import io.temporal.client.WorkflowClient;
 import io.temporal.client.WorkflowOptions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,16 +14,29 @@ public class WorkflowController {
     @Autowired
     private WorkflowClient workflowClient;
 
-    @GetMapping("/onboard/{name}/{role}")
-    String onboard(@PathVariable String name, @PathVariable String role) {
-        Customer customer = new Customer(name, role, "Initial");
+    @PostMapping(value = "/onboard",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public Customer onboardNewCustomer(@RequestBody Customer customer) {
         CustomerWorkflow workflow = workflowClient.newWorkflowStub(CustomerWorkflow.class,
                 WorkflowOptions.newBuilder()
                         .setTaskQueue("CustomerOnboarding")
-                        .setWorkflowId("Customer-" + name)
+                        .setWorkflowId("Customer-" + customer.getName())
                         .build());
         return workflow.onboard(customer);
     }
+
+
+//    @GetMapping("/onboard/{name}/{role}")
+//    String onboard(@PathVariable String name, @PathVariable String role) {
+//        Customer customer = new Customer(name, role, "Initial");
+//        CustomerWorkflow workflow = workflowClient.newWorkflowStub(CustomerWorkflow.class,
+//                WorkflowOptions.newBuilder()
+//                        .setTaskQueue("CustomerOnboarding")
+//                        .setWorkflowId("Customer-" + name)
+//                        .build());
+//        return workflow.onboard(customer);
+//    }
 
     @GetMapping("/milestone/{name}")
     String onboard(@PathVariable String name) {
