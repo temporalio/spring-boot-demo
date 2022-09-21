@@ -14,3 +14,9 @@
       mvn clean install spring-boot:run
 
 * [Start onboarding](http://localhost:3030/)
+
+## DSL 
+
+Demo also includes integration with CNCF Serverless Workflow DSL
+
+* [Start onboarding via DSL](http://localhost:3030/dsl.html)
