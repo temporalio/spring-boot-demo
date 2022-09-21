@@ -25,27 +25,4 @@ public class WorkflowController {
                         .build());
         return workflow.onboard(customer);
     }
-
-
-//    @GetMapping("/onboard/{name}/{role}")
-//    String onboard(@PathVariable String name, @PathVariable String role) {
-//        Customer customer = new Customer(name, role, "Initial");
-//        CustomerWorkflow workflow = workflowClient.newWorkflowStub(CustomerWorkflow.class,
-//                WorkflowOptions.newBuilder()
-//                        .setTaskQueue("CustomerOnboarding")
-//                        .setWorkflowId("Customer-" + name)
-//                        .build());
-//        return workflow.onboard(customer);
-//    }
-
-    @GetMapping("/milestone/{name}")
-    String onboard(@PathVariable String name) {
-        return workflowClient.newUntypedWorkflowStub("Customer-" + name).query("milestone", String.class);
-    }
-
-    @PostMapping(value = "/approve")
-    public String approveCustomer(String name) {
-        workflowClient.newUntypedWorkflowStub("Customer-" + name).signal("approve");
-        return "Thanks for approving: " + name;
-    }
 }

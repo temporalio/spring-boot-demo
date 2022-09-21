@@ -19,22 +19,9 @@ public class CustomerWorkflowImpl implements CustomerWorkflow {
                             .setStartToCloseTimeout(Duration.ofSeconds(3))
                             .build());
 
-
     @Override
     public Customer onboard(Customer customer) {
         this.customer = customer;
-
-//        List<Promise<Customer>> promiseList = new ArrayList<>();
-//        promiseList.add(Async.function(activities::mileStoneOne, customer)
-//            .thenApply(c -> { this.customer = c; return c; }));
-//        promiseList.add(Async.function(activities::mileStoneTwo, customer)
-//                .thenApply(c -> { this.customer = c; return c; }));
-//        promiseList.add(Async.function(activities::mileStoneThree, customer)
-//                .thenApply(c -> { this.customer = c; return c; }));
-//        Promise.allOf(promiseList).get();
-//
-//        Workflow.await(() -> managerApproval);
-
         // simple impl just run through onboarding steps
         if(customer.getRole().equals("CLOUD")) {
             customer = activities.onboardToCloud(customer);
@@ -47,7 +34,6 @@ public class CustomerWorkflowImpl implements CustomerWorkflow {
         }
 
         customer.setOnboarded("yes");
-
         return customer;
     }
 
