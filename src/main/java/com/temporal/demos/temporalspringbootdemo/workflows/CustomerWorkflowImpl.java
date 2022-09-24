@@ -3,6 +3,7 @@ package com.temporal.demos.temporalspringbootdemo.workflows;
 import com.temporal.demos.temporalspringbootdemo.activities.CustomerActivities;
 import com.temporal.demos.temporalspringbootdemo.model.Customer;
 import io.temporal.activity.ActivityOptions;
+import io.temporal.failure.ActivityFailure;
 import io.temporal.spring.boot.WorkflowImpl;
 import io.temporal.workflow.Workflow;
 
@@ -24,8 +25,17 @@ public class CustomerWorkflowImpl implements CustomerWorkflow {
         this.customer = customer;
         // simple impl just run through onboarding steps
         if(customer.getRole().equals("CLOUD")) {
-            customer = activities.onboardToCloud(customer);
+
+            try {
+                customer = activities.onboardToCloud(customer);
+            } catch (ActivityFailure e) {
+                //..
+            }
+
+
             customer = activities.onboardToZendesk(customer);
+
+
             customer = activities.onboardToSlack(customer);
         } else if(customer.getRole().equals("ZENDESK")) {
             customer = activities.onboardToZendesk(customer);
