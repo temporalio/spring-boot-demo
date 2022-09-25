@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:temporalweb="http://temporal.io/">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:temporal="http://temporal.io/">
 <head>
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"/>
@@ -17,12 +17,48 @@
                 max-height: 350px;
             }
         }
+        .btn-info, .btn-info:hover, .btn-info:active, .btn-info:visited {
+            background-color: #BDE8E7 !important;
+            border-color: #BDE8E7; important;
+            color: black; !important;
+        }
+        .btn-warning, .btn-warning:hover, .btn-warning:active, .btn-warning:visited {
+            background-color: #DCF2DE !important;
+            border-color: #DCF2DE; important;
+            color: black; !important;
+        }
     </style>
 </head>
-<temporalweb:clusterinfo/>
 
-<temporalweb:listworkflows/>
+<div class="container">
 
-<temporalweb:startworkflow/>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="https://github.com/temporalio/sdk-java" target="_blank">Temporal Java SDK</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="http://localhost:8085/" target="_blank">Grafana</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="http://localhost:16686/" target="_blank">Jaeger</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="http://localhost:8081" target="_blank">Web UI</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <temporal:clusterinfo/>
+
+    <temporal:startworkflow/>
+
+    <temporal:listworkflows/>
+
+</div>
 </html>
