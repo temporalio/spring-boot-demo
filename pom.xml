@@ -26,6 +26,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
 
         <!-- Temporal -->
         <dependency>
@@ -50,7 +54,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- tracing -->
+        <!-- Tracing -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-sleuth</artifactId>
@@ -70,25 +74,13 @@
             <artifactId>opentelemetry-exporter-otlp</artifactId>
         </dependency>
 
-
-        <!-- Serverless Workflow Java SDK -->
+        <!-- Spring Web UI -->
         <dependency>
-            <groupId>io.serverlessworkflow</groupId>
-            <artifactId>serverlessworkflow-api</artifactId>
-            <version>${version.serverlessworkflow.sdk}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.serverlessworkflow</groupId>
-            <artifactId>serverlessworkflow-validation</artifactId>
-            <version>${version.serverlessworkflow.sdk}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.serverlessworkflow</groupId>
-            <artifactId>serverlessworkflow-spi</artifactId>
-            <version>${version.serverlessworkflow.sdk}</version>
+            <groupId>io.temporal</groupId>
+            <artifactId>springboot-web-ui</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
-        <!-- JsonPath -->
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
