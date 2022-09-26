@@ -27,38 +27,21 @@
             border-color: #DCF2DE; important;
             color: black; !important;
         }
+        .btn-secondary, .btn-secondary:hover, .btn-secondary:active, .btn-secondary:visited {
+            background-color: #EBEBE3 !important;
+            border-color: #EBEBE3; important;
+            color: black; !important;
+        }
     </style>
 </head>
 
 <div class="container">
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="https://github.com/temporalio/sdk-java" target="_blank">Temporal Java SDK</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="http://localhost:8085/" target="_blank">Grafana</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="http://localhost:16686/" target="_blank">Jaeger</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="http://localhost:8081" target="_blank">Web UI</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <temporal:shownav/>
 
     <temporal:clusterinfo/>
 
     <temporal:startworkflow/>
 
     <temporal:listworkflows/>
-
 </div>
 </html>
