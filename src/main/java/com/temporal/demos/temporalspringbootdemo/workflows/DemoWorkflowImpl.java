@@ -1,5 +1,9 @@
 package com.temporal.demos.temporalspringbootdemo.workflows;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.temporal.demos.temporalspringbootdemo.activities.DemoActivities;
 import io.cloudevents.CloudEvent;
 import io.cloudevents.core.builder.CloudEventBuilder;
@@ -37,13 +41,20 @@ public class DemoWorkflowImpl implements DemoWorkflow {
         demoActivities.after(cloudEvent);
 
         // return demo result CE
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.createObjectNode();
+        ((ObjectNode)node).putArray("events");
+        for(CloudEvent c : eventList) {
+            ((ArrayNode)node.get("events")).add(c.getId());
+        }
+        ((ObjectNode)node).put("outcome", "done");
         return CloudEventBuilder.v1()
-                .withId(String.valueOf(1000))
+                .withId(String.valueOf(Workflow.newRandom().nextInt(1000 - 1 + 1) + 1))
                 .withType("example.demo.result")
                 .withSource(URI.create("http://temporal.io"))
                 .withData(
                         "application/json",
-                        ("{\n" + "\"result\": \"demo completed\"\n" + "}")
+                        (node.toPrettyString())
                                 .getBytes(Charset.defaultCharset()))
                 .build();
 
