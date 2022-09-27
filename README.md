@@ -23,7 +23,7 @@ Shown features:
 ## Run Demo
 
 1. First we need to set up Temporal Server. To showcase the metrics
-and tracing capabilities it's easiest to use [this] https://github.com/tsurdilo/my-temporal-dockercompose) repo
+and tracing capabilities it's easiest to use [this](https://github.com/tsurdilo/my-temporal-dockercompose) repo
 which has it all built in and ready to go. If you already have Temporal
 server running on Docker locally you can clean and prune and then run:
 
