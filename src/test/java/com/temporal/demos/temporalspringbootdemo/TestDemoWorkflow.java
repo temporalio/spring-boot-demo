@@ -26,7 +26,6 @@ import java.util.Random;
 
 @SpringBootTest
 @Import(DataConverterTestConfig.class)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TestDemoWorkflow {
 
     @Autowired
@@ -41,7 +40,7 @@ public class TestDemoWorkflow {
     @Test
     public void testDemoWorkflow() {
 
-        // This is needed until https://github.com/temporalio/sdk-java/issues/1463 is fixed if fixed
+        // This is needed until https://github.com/temporalio/sdk-java/issues/1463 is fixed
         // The injected testWorkflowEnvironment does not register custom data converters currently
         // Remove this block when issue is fixed
         TestWorkflowEnvironment testWorkflowEnvironment = TestWorkflowEnvironment.newInstance(TestEnvironmentOptions.newBuilder()
