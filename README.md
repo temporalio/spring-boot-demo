@@ -58,6 +58,111 @@ Once your demo has started up you can access the ui via
 <img src="img/start.png" width="500px" />
 </p>
 
+Now click on "Show/Hide" in the "Start Workflow Execution" module
+to expand it. This will let us start a new workflow exec.
+
+<p align="center">
+<img src="img/startwf.png" width="500px" />
+</p>
+
+Our workflow type is "DemoWorkflow" and its running as we specified via annotations 
+on the "DemoTaskQueue" task queue. You can set whichever workflow id you wish.
+The input of our workflow execution must be in CloudEvents format as 
+that is what our custom data converter expects. 
+Here is sample that you can use:
+
+     {
+       "id": "123",
+       "source": "localhost:3030",
+       "type": "io.temporal.demo",
+       "data": {
+         "first": "john",
+         "last": "doe"
+       }
+     }
+
+Click on "Start Exec" to start a new workflow execution:
+
+<p align="center">
+<img src="img/wfstarted.png" width="500px" />
+</p>
+
+Our execution is in "Running" status, as it is waiting on the next 
+CloudEvent sent to it to continue. It is going to wait until we do that, 
+so let's send it. 
+Click on the "Signal Workflow" button in the "Actions" column:
+
+Fill in "addEvent" as the signal name, as that is what our demo workflow defines
+as the signal method. Enter in a different CloudEvent in the signal payload, you can use:
+
+     {
+       "id": "123",
+       "source": "localhost:3030",
+       "type": "io.temporal.demo",
+       "data": {
+         "first": "marry",
+         "last": "doe"
+       }
+     }
+
+<p align="center">
+<img src="img/wfstarted.png" width="500px" />
+</p>
+
+And click the "Signal" button.
+
+You should see that our workflow execution is not in the "Completed" status.
+
+With Temporal you can query completed workflow executions (up to the 
+configured retention period on the namespace). So let's try to query it
+the query will give us the last event sent to the workflow, so we should
+get the same event as what we just signalled.
+
+For this click on the "Query Workflow" button in "Actions",
+set the query name to "getLastEvent" as that is what our workflow definition 
+defines as the query name, then click "Query Workflow" button:
+
+<p align="center">
+<img src="img/wfstarted.png" width="500px" />
+</p>
+
+Next lets see what our workflow execution results are. Again you can get results 
+of completed executions up to configured retention period on the namespace.
+
+For this click on the "Get Result" button in "Actions", then click on "Get Result" button.
+You should see the results which is also a CloudEvent that includes all the ids of the so far 
+sent signals. For our demo that should be "123" and "124", the ids of the event
+that we sent as workflow data input and then the one that we signalled the workflow execution earlier:
+
+<p align="center">
+<img src="img/getresult.png" width="500px" />
+</p>
+
+## See Metrics and Tracing Info
+
+For metrics, in the navbar on top of the page click on "Grafana" and 
+browse the SDK and Server dashboards that come out of the box for you.
+
+
+For tracing, in the navbar on top of the page click on "Jaeger".
+For service select "temporal-demo", and then in the Operation dropdown
+select "RunWorkflow:DemoWorkflow", then click "Find Traces".
+
+In the result select the http post trace which is the one the UI used
+to start our workflow execution:
+
+<p align="center">
+<img src="img/traces.png" width="500px" />
+</p>
+
+
+And thats it :) Hope you enjoyed the demo and learned something cool.
+Would love to get your comments and suggestions.
+
+
+
+
+
 
 
 
