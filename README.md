@@ -126,8 +126,8 @@ You should see that our workflow execution is now in the "Completed" status.
 ### Query Execution
 
 With Temporal you can query completed workflow executions (up to the 
-configured retention period on the namespace). So let's try to query it
-the query will give us the last event sent to the workflow, so we should
+configured retention period on the namespace). So let's try to query it.
+The query will give us the last event sent to the workflow, so we should
 get the same event as what we just signalled.
 
 For this click on the "Query Workflow" button in "Actions",
