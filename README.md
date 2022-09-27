@@ -26,28 +26,31 @@ Shown features:
 and tracing capabilities it's easiest to use [this] https://github.com/tsurdilo/my-temporal-dockercompose) repo
 which has it all built in and ready to go. If you already have Temporal
 server running on Docker locally you can clean and prune and then run:
-   
 
-    git clone https://github.com/tsurdilo/my-temporal-dockercompose
-    cd my-temporal-dockercompose
-    docker network create temporal-network
-    docker compose -f docker-compose-postgres.yml -f docker-compose-services.yml up
+```json
+git clone https://github.com/tsurdilo/my-temporal-dockercompose
+cd my-temporal-dockercompose
+docker network create temporal-network
+docker compose -f docker-compose-postgres.yml -f docker-compose-services.yml up
+```
 
 2. This demo depends on the [Temporal Spring Boot Thymeleaf UI](https://github.com/tsurdilo/temporal-springboot-web-ui)
 project for the web part of it.
 So first we have to fetch and compile it:
 
-
-    git clone git@github.com:tsurdilo/temporal-springboot-web-ui.git
-    cd temporal-springboot-web-ui
-    mvn clean install
+```json
+git clone git@github.com:tsurdilo/temporal-springboot-web-ui.git
+cd temporal-springboot-web-ui
+mvn clean install
+```
    
 3. Now lets build the demo
 
-
-    git clone git@github.com:tsurdilo/temporal-springboot-demo.git
-    cd temporal-springboot-demo
-    mvn clean install spring-boot:run
+```json
+git clone git@github.com:tsurdilo/temporal-springboot-demo.git
+cd temporal-springboot-demo
+mvn clean install spring-boot:run
+```
 
 ## Use Demo
 
@@ -71,15 +74,17 @@ The input of our workflow execution must be in CloudEvents format as
 that is what our custom data converter expects. 
 Here is sample that you can use:
 
-     {
-       "id": "123",
-       "source": "localhost:3030",
-       "type": "io.temporal.demo",
-       "data": {
-         "first": "john",
-         "last": "doe"
-       }
-     }
+```json
+{
+  "id": "123",
+  "source": "localhost:3030",
+  "type": "io.temporal.demo",
+  "data": {
+   "first": "john",
+   "last": "doe"
+  }
+}
+```
 
 Click on "Start Exec" to start a new workflow execution:
 
@@ -95,15 +100,17 @@ Click on the "Signal Workflow" button in the "Actions" column:
 Fill in "addEvent" as the signal name, as that is what our demo workflow defines
 as the signal method. Enter in a different CloudEvent in the signal payload, you can use:
 
-     {
-       "id": "123",
-       "source": "localhost:3030",
-       "type": "io.temporal.demo",
-       "data": {
-         "first": "marry",
-         "last": "doe"
-       }
-     }
+```json
+ {
+   "id": "123",
+   "source": "localhost:3030",
+   "type": "io.temporal.demo",
+   "data": {
+     "first": "marry",
+     "last": "doe"
+   }
+ }
+ ```
 
 <p align="center">
 <img src="img/wfstarted.png" width="500px" />
