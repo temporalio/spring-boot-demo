@@ -44,7 +44,7 @@ cd temporal-springboot-web-ui
 mvn clean install
 ```
    
-3. Now lets build the demo
+3. Now lets build and start the demo
 
 ```
 git clone git@github.com:tsurdilo/temporal-springboot-demo.git
