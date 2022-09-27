@@ -4,7 +4,6 @@
 
 * [Temporal Java SDK](https://github.com/temporalio/sdk-java)
 * [Spring Boot Integration package](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha)
-* [Temporal Spring Boot Thymeleaf UI](https://github.com/tsurdilo/temporal-springboot-web-ui)
 
 ## Intro
 
@@ -13,8 +12,8 @@ It uses the [Java SDK Spring Boot AutoConfig](https://github.com/temporalio/sdk-
 
 Shown features:
 * [Connection Setup](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#connection-setup)
-* [Data converter auto-discovery](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#data-converter)
 * [Workflows and Activities auto-discovery](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#auto-discovery)
+* [Data converter auto-discovery](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#data-converter)
 * [Integration with Metrics (Prometheus)](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#metrics)
 * [Integration with Tracing (Jaeger)](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#tracing)
 * [Testing](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#testing)
@@ -168,12 +167,6 @@ to start our workflow execution:
 <p align="center">
 <img src="img/traces.png" width="500px" />
 </p>
-
-## That's it 
-
-Hope you enjoyed the demo and learned something cool.
-Would love to get your comments and suggestions (and PRs!!)
-
 
 
 
