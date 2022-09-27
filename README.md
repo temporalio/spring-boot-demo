@@ -105,7 +105,7 @@ as the signal method. Enter in a different CloudEvent in the signal payload, you
 
 ```json
  {
-   "id": "123",
+   "id": "124",
    "source": "localhost:3030",
    "type": "io.temporal.demo",
    "data": {
@@ -116,7 +116,7 @@ as the signal method. Enter in a different CloudEvent in the signal payload, you
  ```
 
 <p align="center">
-<img src="img/wfstarted.png" width="500px" />
+<img src="img/signalwf.png" width="500px" />
 </p>
 
 And click the "Signal" button.
