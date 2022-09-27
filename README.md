@@ -121,7 +121,7 @@ as the signal method. Enter in a different CloudEvent in the signal payload, you
 
 And click the "Signal" button.
 
-You should see that our workflow execution is not in the "Completed" status.
+You should see that our workflow execution is now in the "Completed" status.
 
 ### Query Execution
 
