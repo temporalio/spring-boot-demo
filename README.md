@@ -61,7 +61,9 @@ Once your demo has started up you can access the ui via
 <img src="img/start.png" width="500px" />
 </p>
 
-Now click on "Show/Hide" in the "Start Workflow Execution" module
+### Start new Execution
+
+Click on "Show/Hide" in the "Start Workflow Execution" module
 to expand it. This will let us start a new workflow exec.
 
 <p align="center">
@@ -92,6 +94,7 @@ Click on "Start Exec" to start a new workflow execution:
 <img src="img/wfstarted.png" width="500px" />
 </p>
 
+### Signal Execution
 Our execution is in "Running" status, as it is waiting on the next 
 CloudEvent sent to it to continue. It is going to wait until we do that, 
 so let's send it. 
@@ -120,6 +123,8 @@ And click the "Signal" button.
 
 You should see that our workflow execution is not in the "Completed" status.
 
+### Query Execution
+
 With Temporal you can query completed workflow executions (up to the 
 configured retention period on the namespace). So let's try to query it
 the query will give us the last event sent to the workflow, so we should
@@ -133,6 +138,8 @@ defines as the query name, then click "Query Workflow" button:
 <img src="img/querywf.png" width="500px" />
 </p>
 
+### Get Execution Result
+
 Next lets see what our workflow execution results are. Again you can get results 
 of completed executions up to configured retention period on the namespace.
 
@@ -145,7 +152,7 @@ that we sent as workflow data input and then the one that we signalled the workf
 <img src="img/getresult.png" width="500px" />
 </p>
 
-## See Metrics and Tracing Info
+### See Metrics and Tracing Info
 
 For metrics, in the navbar on top of the page click on "Grafana" and 
 browse the SDK and Server dashboards that come out of the box for you.
@@ -162,9 +169,10 @@ to start our workflow execution:
 <img src="img/traces.png" width="500px" />
 </p>
 
+## That's it 
 
-And thats it :) Hope you enjoyed the demo and learned something cool.
-Would love to get your comments and suggestions.
+Hope you enjoyed the demo and learned something cool.
+Would love to get your comments and suggestions (and PRs!!)
 
 
 
