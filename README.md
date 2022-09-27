@@ -14,7 +14,7 @@ It uses the [Java SDK Spring Boot AutoConfig](https://github.com/temporalio/sdk-
 Shown features:
 * [Connection Setup](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#connection-setup)
 * [Data converter auto-discovery](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#data-converter)
-* [Worker auto-discovery](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#auto-discovery)
+* [Workflows and Activities auto-discovery](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#auto-discovery)
 * [Integration with Metrics (Prometheus)](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#metrics)
 * [Integration with Tracing (Jaeger)](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#tracing)
 * [Testing](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#testing)
