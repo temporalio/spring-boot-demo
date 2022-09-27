@@ -123,7 +123,7 @@ set the query name to "getLastEvent" as that is what our workflow definition
 defines as the query name, then click "Query Workflow" button:
 
 <p align="center">
-<img src="img/wfstarted.png" width="500px" />
+<img src="img/querywf.png" width="500px" />
 </p>
 
 Next lets see what our workflow execution results are. Again you can get results 
