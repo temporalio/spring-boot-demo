@@ -27,7 +27,7 @@ and tracing capabilities it's easiest to use [this] https://github.com/tsurdilo/
 which has it all built in and ready to go. If you already have Temporal
 server running on Docker locally you can clean and prune and then run:
 
-```json
+```
 git clone https://github.com/tsurdilo/my-temporal-dockercompose
 cd my-temporal-dockercompose
 docker network create temporal-network
@@ -38,7 +38,7 @@ docker compose -f docker-compose-postgres.yml -f docker-compose-services.yml up
 project for the web part of it.
 So first we have to fetch and compile it:
 
-```json
+```
 git clone git@github.com:tsurdilo/temporal-springboot-web-ui.git
 cd temporal-springboot-web-ui
 mvn clean install
@@ -46,7 +46,7 @@ mvn clean install
    
 3. Now lets build the demo
 
-```json
+```
 git clone git@github.com:tsurdilo/temporal-springboot-demo.git
 cd temporal-springboot-demo
 mvn clean install spring-boot:run
