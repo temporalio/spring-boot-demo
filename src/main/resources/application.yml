@@ -1,0 +1,37 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+server:
+  port: 3030
+
+spring:
+  application:
+    name: temporal-demo
+  sleuth:
+    otel:
+      config:
+        trace-id-ratio-based: 1
+      exporter:
+        otlp:
+          endpoint: http://127.0.0.1:4317
+    propagation:
+      type: W3C
+  temporal:
+    connection:
+      target: 127.0.0.1:7233
+      target.namespace: default
+    workers:
+      - task-queue: DemoTaskQueue
+        capacity:
+          max-concurrent-workflow-task-pollers: 6
+          max-concurrent-activity-task-pollers: 6
+        rate-limits:
+          max-worker-activities-per-second: 0
+          max-task-queue-activities-per-second: 0
+    workflow-cache:
+      max-instances: 10
+      max-threads: 10
+    workersAutoDiscovery:
+      packages: com.temporal
