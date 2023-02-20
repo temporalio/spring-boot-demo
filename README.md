@@ -32,18 +32,8 @@ cd my-temporal-dockercompose
 docker network create temporal-network
 docker compose -f docker-compose-postgres.yml -f docker-compose-services.yml up
 ```
-
-2. This demo depends on the [Temporal Spring Boot Thymeleaf UI](https://github.com/tsurdilo/temporal-springboot-web-ui)
-project for the web part of it.
-So first we have to fetch and compile it:
-
-```
-git clone git@github.com:tsurdilo/temporal-springboot-web-ui.git
-cd temporal-springboot-web-ui
-mvn clean install
-```
    
-3. Now lets build and start the demo
+2. Build and start the demo
 
 ```
 git clone git@github.com:tsurdilo/temporal-springboot-demo.git
@@ -167,6 +157,32 @@ to start our workflow execution:
 <p align="center">
 <img src="img/traces.png" width="500px" />
 </p>
+
+# Note
+
+This demo uses [Temporal Spring Boot Thymeleaf UI](https://github.com/tsurdilo/temporal-springboot-web-ui)
+project for the web portion (thymeleaf plugin).
+If you want to build this project yourself:
+
+```
+git clone git@github.com:tsurdilo/temporal-springboot-web-ui.git
+cd temporal-springboot-web-ui
+mvn clean install
+```
+
+then in pom.xml you can update dependency:
+
+```
+ <dependency>
+    <groupId>io.temporal</groupId>
+    <artifactId>springboot-web-ui</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <scope>system</scope>
+    <systemPath>${project.basedir}/src/main/resources/springboot-web-ui-1.0-SNAPSHOT.jar</systemPath>
+</dependency>
+```
+
+to remove scope and systemPath from it
 
 
 
