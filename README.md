@@ -30,7 +30,7 @@ server running on Docker locally you can clean and prune and then run:
 git clone https://github.com/tsurdilo/my-temporal-dockercompose
 cd my-temporal-dockercompose
 docker network create temporal-network
-docker compose -f docker-compose-postgres.yml -f docker-compose-services.yml up
+docker compose -f compose-postgres.yml -f compose-services.yml up
 ```
 
 2. This demo depends on the [Temporal Spring Boot Thymeleaf UI](https://github.com/tsurdilo/temporal-springboot-web-ui)
