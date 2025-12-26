@@ -69,11 +69,13 @@
             <artifactId>opentelemetry-exporter-otlp</artifactId>
         </dependency>
 
-        <!-- Spring Web UI -->
+        <!-- Spring Web UI (local depends, see readme if you want to build it yourself)-->
         <dependency>
             <groupId>io.temporal</groupId>
             <artifactId>springboot-web-ui</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/springboot-web-ui-1.0-SNAPSHOT.jar</systemPath>
         </dependency>
 
         <dependency>
