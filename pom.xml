@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.3</version>
+        <version>3.5.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.temporal.demos</groupId>
@@ -14,13 +14,12 @@
     <name>temporal-springboot-demo</name>
     <description>Temporal Spring Boot Demo</description>
     <properties>
-        <java.version>11</java.version>
-        <version.temporal>1.19.1</version.temporal>
-        <spring-cloud.version>2021.0.3</spring-cloud.version>
-        <spring-cloud-sleuth-otel.version>1.1.0-M7</spring-cloud-sleuth-otel.version>
+        <java.version>17</java.version>
+        <version.temporal>1.31.0</version.temporal>
+        <spring-cloud.version>2024.0.0</spring-cloud.version>
         <version.serverlessworkflow.sdk>3.0.0.Final</version.serverlessworkflow.sdk>
-        <version.json.path>2.6.0</version.json.path>
-        <version.cloudevents>2.4.0</version.cloudevents>
+        <version.json.path>2.10.0</version.json.path>
+        <version.cloudevents>4.0.1</version.cloudevents>
     </properties>
     <dependencies>
         <dependency>
@@ -35,7 +34,7 @@
         <!-- Temporal -->
         <dependency>
             <groupId>io.temporal</groupId>
-            <artifactId>temporal-spring-boot-starter-alpha</artifactId>
+            <artifactId>temporal-spring-boot-starter</artifactId>
             <version>${version.temporal}</version>
         </dependency>
         <!-- Metrics -->
@@ -51,18 +50,8 @@
 
         <!-- Tracing -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-sleuth</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-sleuth-brave</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-sleuth-otel-autoconfigure</artifactId>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-otel</artifactId>
         </dependency>
         <dependency>
             <groupId>io.opentelemetry</groupId>
@@ -113,13 +102,6 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-sleuth-otel-dependencies</artifactId>
-                <version>${spring-cloud-sleuth-otel.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

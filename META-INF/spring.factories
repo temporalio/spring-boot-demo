@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+io.temporal.web.ui.config.TemporalWebDialectConfig,\
+io.temporal.web.ui.controller.TemporalWebDialectController
