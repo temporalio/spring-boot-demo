@@ -3,25 +3,33 @@
 ## Links
 
 * [Temporal Java SDK](https://github.com/temporalio/sdk-java)
-* [Spring Boot Integration package](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha)
+* [Spring Boot Integration package](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure)
 
 ## Intro
 
 This demo showcases Temporal Java SDK integration with Spring Boot.
-It uses the [Java SDK Spring Boot AutoConfig](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha).
+It uses the [Java SDK Spring Boot AutoConfig](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure).
 
 Shown features:
-* [Connection Setup](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#connection-setup)
-* [Workflows and Activities auto-discovery](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#auto-discovery)
-* [Data converter auto-discovery](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#data-converter)
-* [Integration with Metrics (Prometheus)](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#metrics)
-* [Integration with Tracing (Jaeger)](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#tracing)
-* [Testing](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#testing)
-* (todo) [mTLS](https://github.com/temporalio/sdk-java/tree/master/temporal-spring-boot-autoconfigure-alpha#mtls)
+* [Connection Setup](https://docs.temporal.io/develop/java/spring-boot-integration#connect)
+* [Workflows and Activities auto-discovery](https://docs.temporal.io/develop/java/spring-boot-integration#auto-discovery)
+* [Integration with Metrics (Prometheus)](https://docs.temporal.io/develop/java/spring-boot-integration#metrics)
+* [Integration with Tracing (Jaeger)](https://docs.temporal.io/develop/java/spring-boot-integration#tracing)
+* [Testing](https://docs.temporal.io/develop/java/spring-boot-integration#testing)
+* [mTLS / Temporal Cloud Support](TEMPORAL_CLOUD_SETUP.md)
 
 ## Run Demo
 
-1. First we need to set up Temporal Server. To showcase the metrics
+### Option 1: Local Temporal Server (Default)
+
+1. First we need to set up Temporal Server. Let's start a local server.
+```
+temporal server start-dev
+```
+
+NOTE:  The metrics and tracing capabilities will be updated in the next PR
+
+To showcase the metrics
 and tracing capabilities it's easiest to use [this](https://github.com/tsurdilo/my-temporal-dockercompose) repo
 which has it all built in and ready to go. If you already have Temporal
 server running on Docker locally you can clean and prune and then run:
@@ -33,17 +41,7 @@ docker network create temporal-network
 docker compose -f docker-compose-postgres.yml -f docker-compose-services.yml up
 ```
 
-2. This demo depends on the [Temporal Spring Boot Thymeleaf UI](https://github.com/tsurdilo/temporal-springboot-web-ui)
-project for the web part of it.
-So first we have to fetch and compile it:
-
-```
-git clone git@github.com:tsurdilo/temporal-springboot-web-ui.git
-cd temporal-springboot-web-ui
-mvn clean install
-```
-   
-3. Now lets build and start the demo
+2. Now lets build and start the demo (the web UI is now embedded in the project)
 
 ```
 git clone git@github.com:tsurdilo/temporal-springboot-demo.git
@@ -51,10 +49,85 @@ cd temporal-springboot-demo
 mvn clean install spring-boot:run
 ```
 
+### Option 2: Temporal Cloud
+
+To connect to Temporal Cloud instead of a local server:
+
+1. Set up your Temporal Cloud namespace and obtain mTLS certificates
+2. Configure environment variables:
+
+```bash
+export TEMPORAL_ADDRESS="your-namespace.tmprl.cloud:7233"
+export TEMPORAL_NAMESPACE="your-namespace.account-id"
+export TEMPORAL_CERT_PATH="/path/to/client.pem"
+export TEMPORAL_KEY_PATH="/path/to/client.key"
+```
+
+3. Run with the cloud profile:
+
+```bash
+mvn spring-boot:run -Dspring-boot.run.profiles=cloud
+```
+
+📖 **For detailed Temporal Cloud setup instructions, see [TEMPORAL_CLOUD_SETUP.md](TEMPORAL_CLOUD_SETUP.md)**
+
+## Worker Management
+
+**Important:** With Spring Boot Temporal integration, the Worker is automatically started when you run the application. There's no need to start a separate Worker process.
+
+When you execute `mvn spring-boot:run`, the application will:
+1. Start the Spring Boot web server (port 3030)
+2. **Automatically discover and register Workflows and Activities** via `@WorkflowImpl` and `@ActivityImpl` annotations
+3. **Automatically start Worker(s)** configured in `application.yml` under `spring.temporal.workers`
+
+You'll see log output like this when the Worker starts:
+```
+Creating a worker with default settings for a task queue 'DemoTaskQueue'...
+Registering auto-discovered workflow class DemoWorkflowImpl...
+Registering auto-discovered activity bean 'demoActivitiesImpl'...
+```
+
+### Worker Configuration
+
+Workers are configured in `src/main/resources/application.yml`:
+
+```yaml
+spring:
+  temporal:
+    workers:
+      - task-queue: DemoTaskQueue
+        capacity:
+          max-concurrent-workflow-task-pollers: 5
+          max-concurrent-activity-task-pollers: 5
+```
+
+For more details on worker configuration options, see the [Spring Boot AutoConfig documentation](https://docs.temporal.io/develop/java/spring-boot-integration#configure-workers).
+
 ## Use Demo
 
 Once your demo has started up you can access the ui via
 [localhost:3030](http://localhost:3030/)
+
+The web UI provides custom Thymeleaf tags for Temporal workflow management:
+- `<temporal:shownav/>` - Navigation bar with links to monitoring tools
+- `<temporal:clusterinfo/>` - Display Temporal cluster information
+- `<temporal:startworkflow/>` - Form to start workflow executions
+- `<temporal:listworkflows/>` - List all workflow executions with management actions
+
+### Configuration
+
+You can configure external monitoring tool URLs in `application.yml`:
+
+```yaml
+temporal:
+  ui:
+    grafana:
+      url: http://localhost:8085
+    jaeger:
+      url: http://localhost:16686
+    webui:
+      url: http://localhost:8081
+```
 
 <p align="center">
 <img src="img/start.png" width="500px" />

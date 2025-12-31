@@ -17,3 +17,11 @@ src/main/idls/*
 .project
 .settings
 .vscode/
+
+# Temporal Cloud certificates and credentials
+*.pem
+*.key
+*.crt
+.env
+.env.local
+.env.*.local

@@ -15,7 +15,6 @@ import io.cloudevents.core.builder.CloudEventBuilder;
 import io.cloudevents.core.format.EventFormat;
 import io.cloudevents.core.format.EventSerializationException;
 import io.cloudevents.core.provider.EventFormatProvider;
-import io.cloudevents.core.v1.CloudEventV1;
 import io.cloudevents.jackson.JsonFormat;
 import io.temporal.api.common.v1.Payload;
 import io.temporal.common.converter.DataConverterException;
@@ -24,7 +23,6 @@ import io.temporal.common.converter.PayloadConverter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URI;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
@@ -54,6 +52,10 @@ public class CloudEventsPayloadConverter implements PayloadConverter {
     @Override
     public Optional<Payload> toData(Object value) throws DataConverterException {
         try {
+            if (value == null) {
+                throw new DataConverterException("Cannot convert null value to CloudEvent");
+            }
+
             CloudEvent cloudEvent;
 
             if(value instanceof ObjectNode) {
@@ -68,6 +70,10 @@ public class CloudEventsPayloadConverter implements PayloadConverter {
 
             } else {
                 cloudEvent = (CloudEvent) value;
+            }
+
+            if (cloudEvent == null) {
+                throw new DataConverterException("CloudEvent conversion resulted in null");
             }
 
             byte[] serialized = CEFormat.serialize(cloudEvent);
@@ -88,12 +94,38 @@ public class CloudEventsPayloadConverter implements PayloadConverter {
     public <T> T fromData(Payload content, Class<T> valueClass, Type valueType)
             throws DataConverterException {
         try {
-            return (T) CEFormat.deserialize(content.getData().toByteArray());
-        } catch (Exception e) {
+            byte[] data = content.getData().toByteArray();
+            if (data == null || data.length == 0) {
+                throw new DataConverterException("Payload data is null or empty");
+            }
+
+            CloudEvent cloudEvent = CEFormat.deserialize(data);
+            if (cloudEvent == null) {
+                throw new DataConverterException("Deserialized CloudEvent is null");
+            }
+
+            // Type safety check before casting
+            if (!valueClass.isAssignableFrom(CloudEvent.class)) {
+                throw new DataConverterException(
+                    "Cannot convert CloudEvent to " + valueClass.getName() +
+                    ". Expected CloudEvent or compatible type.");
+            }
+
+            @SuppressWarnings("unchecked")
+            T result = (T) cloudEvent;
+            return result;
+        } catch (DataConverterException e) {
+            // Re-throw our own exceptions
+            throw e;
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            // Fall back to Jackson deserialization for non-CloudEvent types or malformed data
             try {
-                @SuppressWarnings("deprecation")
-                JavaType reference = mapper.getTypeFactory().constructType(valueType, valueClass);
-                return mapper.readValue(content.getData().toByteArray(), reference);
+                JavaType reference = mapper.getTypeFactory().constructType(valueType);
+                byte[] data = content.getData().toByteArray();
+                if (data == null || data.length == 0) {
+                    throw new DataConverterException("Payload data is null or empty");
+                }
+                return mapper.readValue(data, reference);
             } catch (IOException ee) {
                 throw new DataConverterException(ee);
             }

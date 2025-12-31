@@ -9,6 +9,9 @@ server:
 spring:
   application:
     name: temporal-demo
+  thymeleaf:
+    mode: HTML
+    cache: false
   sleuth:
     otel:
       config:
@@ -20,8 +23,14 @@ spring:
       type: W3C
   temporal:
     connection:
-      target: 127.0.0.1:7233
-      target.namespace: default
+      target: ${TEMPORAL_ADDRESS:127.0.0.1:7233}
+      target.namespace: ${TEMPORAL_NAMESPACE:default}
+      # mTLS settings (required for Temporal Cloud)
+      # Uncomment and configure for Temporal Cloud:
+      # mtls:
+      #   enabled: ${TEMPORAL_MTLS_ENABLED:false}
+      #   cert-chain: ${TEMPORAL_CERT_PATH:}      # Path to client cert (e.g., /path/to/client.pem)
+      #   private-key: ${TEMPORAL_KEY_PATH:}      # Path to client key (e.g., /path/to/client.key)
     workers:
       - task-queue: DemoTaskQueue
         capacity:
@@ -35,3 +44,15 @@ spring:
       max-threads: 10
     workersAutoDiscovery:
       packages: com.temporal
+
+temporal:
+  ui:
+    grafana:
+      url: http://localhost:8085
+    jaeger:
+      url: http://localhost:16686
+    webui:
+      url: http://localhost:8081
+    signal:
+      delay:
+        millis: 0  # Set to positive value (e.g., 500) to add delay after signal operations

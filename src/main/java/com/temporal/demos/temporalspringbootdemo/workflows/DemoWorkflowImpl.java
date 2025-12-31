@@ -12,7 +12,7 @@ import io.temporal.spring.boot.WorkflowImpl;
 import io.temporal.workflow.Workflow;
 
 import java.net.URI;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +54,7 @@ public class DemoWorkflowImpl implements DemoWorkflow {
                 .withSource(URI.create("http://temporal.io"))
                 .withData(
                         "application/json",
-                        (node.toPrettyString())
-                                .getBytes(Charset.defaultCharset()))
+                        node.toPrettyString().getBytes(StandardCharsets.UTF_8))
                 .build();
 
     }
@@ -67,6 +66,9 @@ public class DemoWorkflowImpl implements DemoWorkflow {
 
     @Override // QueryMethod
     public CloudEvent getLastEvent() {
+        if (eventList == null || eventList.isEmpty()) {
+            return null;
+        }
         return eventList.get(eventList.size() - 1);
     }
 }
