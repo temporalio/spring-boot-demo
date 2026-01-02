@@ -24,7 +24,7 @@ spring:
   temporal:
     connection:
       target: ${TEMPORAL_ADDRESS:127.0.0.1:7233}
-      target.namespace: ${TEMPORAL_NAMESPACE:default}
+    namespace: ${TEMPORAL_NAMESPACE:default}
       # mTLS settings (required for Temporal Cloud)
       # Uncomment and configure for Temporal Cloud:
       # mtls:
