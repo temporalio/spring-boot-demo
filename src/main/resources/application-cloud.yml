@@ -1,0 +1,38 @@
+# Temporal Cloud Configuration Profile
+# To use this profile:
+# 1. Set environment variables for your Temporal Cloud connection
+# 2. Run with: mvn spring-boot:run -Dspring-boot.run.profiles=cloud
+#
+# Required environment variables:
+#   TEMPORAL_ADDRESS - Your Temporal Cloud namespace address (e.g., your-namespace.tmprl.cloud:7233)
+#   TEMPORAL_NAMESPACE - Your Temporal Cloud namespace (e.g., your-namespace.account-id)
+#   TEMPORAL_CERT_PATH - Path to your client certificate file (e.g., /path/to/client.pem)
+#   TEMPORAL_KEY_PATH - Path to your client private key file (e.g., /path/to/client.key)
+
+spring:
+  temporal:
+    connection:
+      target: ${TEMPORAL_ADDRESS}
+      target.namespace: ${TEMPORAL_NAMESPACE}
+      mtls:
+        enabled: true
+        cert-chain: ${TEMPORAL_CERT_PATH}
+        private-key: ${TEMPORAL_KEY_PATH}
+
+# Disable local tracing for cloud (unless you have cloud tracing configured)
+  sleuth:
+    otel:
+      exporter:
+        otlp:
+          endpoint: ${OTEL_ENDPOINT:}  # Set to empty or configure your cloud OTLP endpoint
+
+temporal:
+  ui:
+    # Update these to point to Temporal Cloud Web UI
+    webui:
+      url: https://cloud.temporal.io/namespaces/${TEMPORAL_NAMESPACE}
+    # Grafana and Jaeger may not be available in cloud setup
+    grafana:
+      url: ${GRAFANA_URL:}
+    jaeger:
+      url: ${JAEGER_URL:}

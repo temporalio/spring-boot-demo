@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head></head>
+
+<body>
+
+<div th:fragment="startworkflow">
+    <div class="card bg-light mb-3">
+        <div class="card-header" style="background-color: #ABBAEA">
+            <h4> Start Workflow Execution </h4>
+<!--            &nbsp;&nbsp;&nbsp;-->
+            <a class="btn btn-light float-right" data-toggle="collapse" href="#startwfinfo"
+               role="button" aria-expanded="false" aria-controls="startwfinfo">
+                Show/Hide
+            </a>
+        </div>
+        <div class="collapse" id="startwfinfo">
+        <div class="card-body">
+            <form method="post" th:action="@{/startexec}" th:object="${startInfo}">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="workflowtype">Workflow Type</label>
+                        <input type="text" class="form-control" id="workflowType" placeholder=""
+                               th:field="*{workflowType}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="workflowid">Workflow Id</label>
+                        <input type="text" class="form-control" id="workflowId" placeholder=""
+                               th:field="*{workflowId}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="taskqueue">Task Queue</label>
+                        <input type="text" class="form-control" id="taskQueue" placeholder=""
+                               th:field="*{taskQueue}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputjson">Workflow Input JSON</label>
+                        <textarea class="form-control" id="inputjson" rows="10"
+                                  th:field="*{inputJson}"
+                                  th:text="${defaultce}">
+                        </textarea>
+                    </div>
+<!--                    <div class="form-group col-md-6">-->
+<!--                        <label for="namespace">Namespace</label>-->
+<!--                        <input type="text" class="form-control" id="namespace" placeholder=""-->
+<!--                               th:field="*{namespace}">-->
+<!--                    </div>-->
+                </div>
+                <p><input type="submit" value="Start Exec" /> <input type="reset" value="Reset" /></p>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="clusterinfo">
+    <div class="card bg-light mb-3">
+        <div class="card-header" style="background-color: #D2D5B8">
+            <h4> Temporal Cluster Info </h4>
+<!--            &nbsp;&nbsp;&nbsp;-->
+            <a class="btn btn-light float-right" data-toggle="collapse" href="#clusterinfoid"
+               role="button" aria-expanded="false" aria-controls="clusterinfoid">
+                Show/Hide
+            </a>
+        </div>
+        <div class="collapse" id="clusterinfoid">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th> Name</th>
+                    <th> Server Version</th>
+                    <th> Shard Count</th>
+                    <th> Persistence Store</th>
+                    <th> Visibility Store</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${clusterinfo == null}">
+                    <td colspan="2"> No Cluster Info Available</td>
+                </tr>
+                <tr>
+                    <td><span th:text="${clusterinfo.clusterName}"> Task Name </span></td>
+                    <td><span th:text="${clusterinfo.serverVersion}"> Server Version </span></td>
+                    <td><span th:text="${clusterinfo.historyShardCount}"> ShardClout </span></td>
+                    <td><span th:text="${clusterinfo.persistenceStore}"> Persistence Store</span></td>
+                    <td><span th:text="${clusterinfo.visibilityStore}"> Visibility Store </span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="listworkflows">
+    <div class="card bg-light mb-3">
+        <div class="card-header" style="background-color: #F9D9CA">
+            <h4> Workflow Executions </h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th> Task Queue</th>
+                    <th> Workflow Id</th>
+                    <th> Run Id</th>
+                    <th> Status</th>
+                    <th> Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${workflows.empty}">
+                    <td colspan="6"><center>No Workflows Executions Available</center></td>
+                </tr>
+                <tr th:each="workflow : ${workflows}">
+                    <th scope="row" th:text="${workflowStat.count}"/>
+                    <td><span th:text="${workflow.taskQueue}"> Task Queue </span></td>
+                    <td><span th:text="${workflow.execution.workflowId}"> Workflow Id </span></td>
+                    <td><span th:text="${workflow.execution.runId}"> Run Id </span></td>
+                    <td><span th:text="${workflow.status}"> Status </span></td>
+                    <td>
+                        <button type="button" class="btn btn-info btn-sm"
+                                th:data-workflowId="${workflow.execution.workflowId}"
+                                th:data-runId="${workflow.execution.runId}"
+                                onclick="temporalWorkflowHistory(this.getAttribute('data-workflowId'),
+                                this.getAttribute('data-runId'));">View History
+                        </button>
+                        <button type="button" class="btn btn-warning btn-sm"
+                                th:data-workflowId="${workflow.execution.workflowId}"
+                                th:data-runId="${workflow.execution.runId}"
+                                onclick="temporalSignalWorkflow(this.getAttribute('data-workflowId'),
+                                this.getAttribute('data-runId'));">Signal Workflow
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-sm"
+                                th:data-workflowId="${workflow.execution.workflowId}"
+                                th:data-runId="${workflow.execution.runId}"
+                                onclick="temporalQueryWorkflow(this.getAttribute('data-workflowId'),
+                                this.getAttribute('data-runId'));">Query Workflow
+                        </button>
+                        <button type="button" class="btn btn btn btn-danger btn-sm"
+                                th:data-workflowId="${workflow.execution.workflowId}"
+                                th:data-runId="${workflow.execution.runId}"
+                                onclick="temporalGetResult(this.getAttribute('data-workflowId'),
+                                this.getAttribute('data-runId'));">Get Result
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="showhistorymodalholder"></div>
+    <div id="showsignalworkflowmodalholder"></div>
+    <div id="showqueryworkflowmodalholder"></div>
+    <div id="showgetresultmodalholder"></div>
+    <script>
+        function temporalWorkflowHistory(workflowId, runId) {
+            $.ajax({
+                url: "/temporalshowhistory/" + workflowId + "/" + runId,
+                success: function (data) {
+                    $("#showhistorymodalholder").html(data);
+                    $("#showhistorymodal1").modal("show");
+                }
+            });
+        }
+        function temporalSignalWorkflow(workflowId, runId) {
+            $.ajax({
+                url: "/temporalsignalworkflow/" + workflowId + "/" + runId,
+                success: function (data) {
+                    $("#showsignalworkflowmodalholder").html(data);
+                    $("#showsignalworkflowmodal1").modal("show");
+                }
+            });
+        }
+        function temporalQueryWorkflow(workflowId, runId) {
+            $.ajax({
+                url: "/temporalqueryworkflow/" + workflowId + "/" + runId,
+                success: function (data) {
+                    $("#showqueryworkflowmodalholder").html(data);
+                    $("#showqueryworkflowmodal1").modal("show");
+                }
+            });
+        }
+        function temporalGetResult(workflowId, runId) {
+            $.ajax({
+                url: "/temporalgetresult/" + workflowId + "/" + runId,
+                success: function (data) {
+                    $("#showgetresultmodalholder").html(data);
+                    $("#getresultmodal1").modal("show");
+                }
+            });
+        }
+    </script>
+</div>
+
+<div th:fragment="showhistorymodal" class="modal" id="showhistorymodal1" tabindex="-1" role="dialog"
+     aria-labelledby="showhistorylabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="showhistorylabel">Workflow History
+                    <br/>WorkflowId: <span th:text="${workflowid}"> WorkflowId </span>
+                    <br/>WorkflowRunId: <span th:text="${workflowrunid}"> WorkflowRunId </span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="overflow-auto">
+                <pre class="language-json match-braces line-numbers"><code th:text="${workflowhistory}">
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="showsignalworkflowmodal" class="modal" id="showsignalworkflowmodal1" tabindex="-1" role="dialog"
+     aria-labelledby="showsignallabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="showsignallabel">Signal Workflow</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                    <form method="post" th:action="@{/signalwf}" th:object="${signalInfo}">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="workflowid1">Workflow Id</label>
+                            <input type="text" class="form-control" id="workflowid1"
+                                   th:field="*{workflowId}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="workflowrunid1">Workflow Run Id</label>
+                            <input type="text" class="form-control" id="workflowrunid1"
+                                   th:field="*{workflowRunId}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="signalname">Signal Name</label>
+                            <input type="text" class="form-control" id="signalname"
+                                   th:field="*{signalName}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputjson">Workflow Input JSON</label>
+                            <textarea class="form-control" id="inputjson" rows="10"
+                                      th:field="*{signalJson}">
+                        </textarea>
+                        </div>
+                    </div>
+                    <p><input type="submit" value="Signal" /> <input type="reset" value="Reset" /></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="showqueryworkflowmodal" class="modal" id="showqueryworkflowmodal1" tabindex="-1" role="dialog"
+     aria-labelledby="showquerylabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="showquerylabel">Query Workflow</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="queryform" method="get" th:object="${queryInfo}">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="workflowid1">Workflow Id</label>
+                            <input type="text" class="form-control" id="workflowid2"
+                                   th:field="*{workflowId}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="workflowrunid1">Workflow Run Id</label>
+                            <input type="text" class="form-control" id="workflowrunid2"
+                                   th:field="*{workflowRunId}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="queryname">Query Name</label>
+                            <input type="text" class="form-control" id="queryname"
+                                   th:field="*{queryName}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="resultjson">Result</label>
+                            <textarea class="form-control" id="resultjson" rows="10"
+                                      th:field="*{result}">
+                        </textarea>
+                        </div>
+                    </div>
+                    <p>
+                        <button type="button" class="btn btn-secondary btn-sm"
+                                th:data-workflowId="${queryInfo.workflowId}"
+                                th:data-runId="${queryInfo.workflowRunId}"
+                                onclick="temporalQueryWorkflow2(this.getAttribute('data-workflowId'),
+                                this.getAttribute('data-runId'));">Query Workflow
+                        </button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function temporalQueryWorkflow2(workflowId, runId) {
+            $.ajax({
+                url: "/querywf/" + workflowId + "/" + runId + "/" + $("#queryname").val(),
+                success: function (data) {
+                    $("textarea#resultjson").val(data);
+                }
+            });
+        }
+    </script>
+</div>
+
+<div th:fragment="getresultmodal" class="modal" id="getresultmodal1" tabindex="-1" role="dialog"
+     aria-labelledby="getresultlabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="getresultlabel">Get Result</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="getresultform" method="get" th:object="${queryInfo}">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="workflowid3">Workflow Id</label>
+                            <input type="text" class="form-control" id="workflowid3"
+                                   th:field="*{workflowId}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="workflowrunid3">Workflow Run Id</label>
+                            <input type="text" class="form-control" id="workflowrunid3"
+                                   th:field="*{workflowRunId}">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="resultjson2">Result</label>
+                            <textarea class="form-control" id="resultjson2" rows="10"
+                                      th:field="*{result}">
+                        </textarea>
+                        </div>
+                    </div>
+                    <p>
+                        <button type="button" class="btn btn-secondary btn-sm"
+                                th:data-workflowId="${queryInfo.workflowId}"
+                                th:data-runId="${queryInfo.workflowRunId}"
+                                onclick="temporalGetResult2(this.getAttribute('data-workflowId'),
+                                this.getAttribute('data-runId'));">Get Result
+                        </button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function temporalGetResult2(workflowId, runId) {
+            $.ajax({
+                url: "/wfresult/" + workflowId + "/" + runId,
+                success: function (data) {
+                    $("textarea#resultjson2").val(data);
+                }
+            });
+        }
+    </script>
+</div>
+
+<div th:fragment="shownav">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="https://github.com/temporalio/sdk-java" target="_blank">Temporal Java SDK</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="${@environment.getProperty('temporal.ui.grafana.url')}" target="_blank">Grafana</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="${@environment.getProperty('temporal.ui.jaeger.url')}" target="_blank">Jaeger</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="${@environment.getProperty('temporal.ui.webui.url')}" target="_blank">Web UI</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+</body>
+</html>
