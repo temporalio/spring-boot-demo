@@ -12,12 +12,12 @@
 spring:
   temporal:
     connection:
-      target: ${TEMPORAL_ADDRESS}
-      target.namespace: ${TEMPORAL_NAMESPACE}
       mtls:
         enabled: true
+        target: ${TEMPORAL_ADDRESS}
         cert-chain: ${TEMPORAL_CERT_PATH}
         private-key: ${TEMPORAL_KEY_PATH}
+    namespace: ${TEMPORAL_NAMESPACE}
 
 # Disable local tracing for cloud (unless you have cloud tracing configured)
   sleuth:
